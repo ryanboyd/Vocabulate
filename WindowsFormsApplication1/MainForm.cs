@@ -172,7 +172,10 @@ namespace VocabulateApplication
                     for (int i = 0; i < DictData.NumCats; i++) HeaderString.Append(CSVDelimiter + CSVQuote +
                                                                                DictData.CatNames[i].Replace(CSVQuote, CSVQuote + CSVQuote) + "_Count" +
                                                                               CSVQuote);
-                }
+                    for (int i = 0; i < DictData.NumCats; i++) HeaderString.Append(CSVDelimiter + CSVQuote +
+                                                                                DictData.CatNames[i].Replace(CSVQuote, CSVQuote + CSVQuote) + "_Unique" +
+                                                                                CSVQuote);
+                    }
 
                     outputFile.WriteLine(HeaderString.ToString());
 
@@ -336,7 +339,7 @@ namespace VocabulateApplication
 
 
                         short OutputColumnsModifier = 1;
-                        if (DictData.RawWordCounts) OutputColumnsModifier = 2;
+                        if (DictData.RawWordCounts) OutputColumnsModifier = 3;
                         
                         string[] OutputString = new string[NumberOfHeaderLeadingColumns + (DictData.NumCats * OutputColumnsModifier)];
 
@@ -381,12 +384,6 @@ namespace VocabulateApplication
                             }
 
 
-                            if (DictData.RawWordCounts)
-                            {
-                                //for (int i = 0; i < DictData.NumCats; i++) OutputString[i + 3] = DictionaryResults[DictData.CatValues[i]].ToString();
-                            }
-                            
-
                             for(int i = 0; i < DictData.CategoryOrder.Count; i++)
                             {
 
@@ -404,14 +401,13 @@ namespace VocabulateApplication
                                 for (int i = 0; i < DictData.CategoryOrder.Count; i++)
                                 {
 
-                                    if (CompiledResults[DictData.CategoryOrder[i]][0] > 0)
-                                    {
-                                        OutputString[i + NumberOfHeaderLeadingColumns + DictData.NumCats] = CompiledResults[DictData.CategoryOrder[i]][1].ToString();
-                                    }
+                                       OutputString[i + NumberOfHeaderLeadingColumns + DictData.NumCats] = CompiledResults[DictData.CategoryOrder[i]][1].ToString();
+                                       OutputString[i + NumberOfHeaderLeadingColumns + (DictData.NumCats * 2)] = CompiledResults[DictData.CategoryOrder[i]][0].ToString();
 
                                 }
 
-                        }
+
+                            }
 
                                 
 

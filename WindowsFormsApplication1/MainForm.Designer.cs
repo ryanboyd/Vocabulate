@@ -124,6 +124,8 @@
             // RawWCCheckbox
             // 
             this.RawWCCheckbox.AutoSize = true;
+            this.RawWCCheckbox.Checked = true;
+            this.RawWCCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.RawWCCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RawWCCheckbox.Location = new System.Drawing.Point(657, 318);
             this.RawWCCheckbox.Name = "RawWCCheckbox";

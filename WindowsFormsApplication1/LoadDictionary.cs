@@ -130,7 +130,7 @@ namespace Vocabulate
                             }
 
                                 
-                            DictData.PrecompiledWildcards.Add(WordToCodeTrimmed.ToLower(), new Regex(Regex.Escape(WordToCodeTrimmed.ToLower()).Replace("\\*", ".*"), RegexOptions.Compiled));
+                            DictData.PrecompiledWildcards.Add(WordToCodeTrimmed.ToLower(), new Regex("^" + Regex.Escape(WordToCodeTrimmed.ToLower()).Replace("\\*", ".*"), RegexOptions.Compiled));
 
                         }
                         else
