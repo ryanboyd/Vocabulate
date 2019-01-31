@@ -60,7 +60,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(162, 26);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Vocabulate v0.89";
+            this.label1.Text = "Vocabulate v0.90";
             this.label1.UseWaitCursor = true;
             // 
             // label2

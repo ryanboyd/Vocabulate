@@ -87,6 +87,7 @@ namespace VocabulateApplication
                                 DictData.StopListRawText = StopListTextBox.Text;
                                 DictData.CSVDelimiter = CSVDelimiterTextbox.Text[0];
                                 DictData.CSVQuote = CSVQuoteTextbox.Text[0];
+                                DictData.OutputCapturedText = OutputCapturedWordsCheckbox.Checked;
 
                                 if (DictData.OutputFileLocation != "") {
 
@@ -98,6 +99,7 @@ namespace VocabulateApplication
                                     RawWCCheckbox.Enabled = false;
                                     CSVDelimiterTextbox.Enabled = false;
                                     CSVQuoteTextbox.Enabled = false;
+                                    OutputCapturedWordsCheckbox.Enabled = false;
                             
                                     BgWorker.RunWorkerAsync(DictData);
                                 }
@@ -124,6 +126,12 @@ namespace VocabulateApplication
             Tokenizer.Initialize_Regex();
             Vocabulate.StopWordRemover StopList = new Vocabulate.StopWordRemover();
             StopList.BuildStopList(DictData.StopListRawText);
+
+            //sets up how many columns we're using for output
+            short OutputColumnsModifier = 1;
+            if (DictData.RawWordCounts) OutputColumnsModifier = 3;
+            short OutputCapturedText = 0;
+            if (DictData.OutputCapturedText) OutputCapturedText = 1;
 
 
             //selects the text encoding based on user selection
@@ -175,9 +183,11 @@ namespace VocabulateApplication
                     for (int i = 0; i < DictData.NumCats; i++) HeaderString.Append(CSVDelimiter + CSVQuote +
                                                                                 DictData.CatNames[i].Replace(CSVQuote, CSVQuote + CSVQuote) + "_Unique" +
                                                                                 CSVQuote);
-                    }
+                }
 
-                    outputFile.WriteLine(HeaderString.ToString());
+                if (DictData.OutputCapturedText) HeaderString.Append(CSVDelimiter + CSVQuote + "CapturedText" + CSVQuote);
+
+                outputFile.WriteLine(HeaderString.ToString());
 
 
                     foreach (string fileName in files)
@@ -230,6 +240,7 @@ namespace VocabulateApplication
                         int TotalStringLength_AfterStopList = Words.Length;
                         double TTR_Clean = (Words.Distinct().Count() / (double)TotalStringLength_AfterStopList) * 100;
 
+                        StringBuilder CapturedText = new StringBuilder();
 
                         List<string> NonmatchedTokens = new List<string>();
 
@@ -289,6 +300,9 @@ namespace VocabulateApplication
                                         i += NumberOfWords - 1;
                                         //break out of the lower level for loop back to moving on to new words altogether
                                         TokenMatched = true;
+
+                                        if (DictData.OutputCapturedText) CapturedText.Append(TargetString.Replace(CSVQuote, CSVQuote + CSVQuote) + " ");
+
                                         break;
                                     }
                                 }
@@ -310,6 +324,9 @@ namespace VocabulateApplication
                                             i += NumberOfWords - 1;
                                             //break out of the lower level for loop back to moving on to new words altogether
                                             TokenMatched = true;
+
+                                            if (DictData.OutputCapturedText) CapturedText.Append(TargetString.Replace(CSVQuote, CSVQuote + CSVQuote) + " ");
+
                                             break;
 
                                         }
@@ -319,6 +336,8 @@ namespace VocabulateApplication
 
                             //this is what we do if we didn't find any match in our dictionary
                             if (!TokenMatched) NonmatchedTokens.Add(Words[i]);
+                            
+                            
 
 
 
@@ -338,10 +357,9 @@ namespace VocabulateApplication
                         //                                            |_|              
 
 
-                        short OutputColumnsModifier = 1;
-                        if (DictData.RawWordCounts) OutputColumnsModifier = 3;
+
                         
-                        string[] OutputString = new string[NumberOfHeaderLeadingColumns + (DictData.NumCats * OutputColumnsModifier)];
+                        string[] OutputString = new string[NumberOfHeaderLeadingColumns + (DictData.NumCats * OutputColumnsModifier) + OutputCapturedText];
 
                         for (int i = 0; i < OutputString.Length; i++) OutputString[i] = "";
 
@@ -355,7 +373,7 @@ namespace VocabulateApplication
                         if (NonmatchedTokens.Count() > 0) OutputString[6] = (((double)NonmatchedTokens.Distinct().Count() / NonmatchedTokens.Count()) * 100).ToString(); //TTR for non-dictionary words
                         
                     
-
+                    //calculate and output the results
                     if (TotalStringLength_BeforeStopList > 0)
                         {
                             
@@ -418,6 +436,9 @@ namespace VocabulateApplication
                             for (int i = 0; i < DictData.NumCats; i++) OutputString[i + NumberOfHeaderLeadingColumns] = "";
                         }
 
+                        //if we're outputting the captured strings, we do that here
+                        if(DictData.OutputCapturedText) OutputString[OutputString.Length - 1] = CSVQuote + CapturedText.ToString() + CSVQuote;
+
 
                         outputFile.WriteLine(String.Join(CSVDelimiter, OutputString));
 
@@ -456,6 +477,7 @@ namespace VocabulateApplication
             RawWCCheckbox.Enabled = true;
             CSVDelimiterTextbox.Enabled = true;
             CSVQuoteTextbox.Enabled = true;
+            OutputCapturedWordsCheckbox.Enabled = true;
             FilenameLabel.Text = "Finished!";
             MessageBox.Show("Vocabulate has finished analyzing your texts.", "Analysis Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

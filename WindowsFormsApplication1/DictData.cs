@@ -21,6 +21,8 @@ namespace Vocabulate
         public char CSVDelimiter { get; set; }
         public char CSVQuote { get; set; }
 
+        public bool OutputCapturedText { get; set; }
+
         public Dictionary<int, string> CategoryOrder { get; set; }
 
         //yeah, we're going full inception with this variable. dictionary inside of a dictionary inside of a dictionary

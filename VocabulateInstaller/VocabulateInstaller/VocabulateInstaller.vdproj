@@ -150,7 +150,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Vocabulate, Version=0.89.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Vocabulate, Version=0.90.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_4737B6CA73144507A118B0DC35AE33DF"
@@ -233,15 +233,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Vocabulate"
-        "ProductCode" = "8:{BF423987-E134-42A0-A7E0-6093EA2864E2}"
-        "PackageCode" = "8:{0E823CC9-106B-485E-A0F5-804A1D3AB55F}"
+        "ProductCode" = "8:{02C6765F-C2E3-4693-9944-8E13074B7E07}"
+        "PackageCode" = "8:{2418FBCA-481D-49F0-AE57-404EAB19ED08}"
         "UpgradeCode" = "8:{2029A175-F490-4DCD-ADBA-8A76392A9CEB}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.89"
+        "ProductVersion" = "8:0.90"
         "Manufacturer" = "8:Ryan L. Boyd, Ph.D."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://ryanb.cc"
