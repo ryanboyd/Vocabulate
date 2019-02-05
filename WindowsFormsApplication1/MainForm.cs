@@ -128,8 +128,8 @@ namespace VocabulateApplication
             StopList.BuildStopList(DictData.StopListRawText);
 
             //sets up how many columns we're using for output
-            short OutputColumnsModifier = 1;
-            if (DictData.RawWordCounts) OutputColumnsModifier = 3;
+            short OutputColumnsModifier = 2;
+            if (DictData.RawWordCounts) OutputColumnsModifier = 4;
             short OutputCapturedText = 0;
             if (DictData.OutputCapturedText) OutputCapturedText = 1;
 
@@ -160,10 +160,12 @@ namespace VocabulateApplication
             using (StreamWriter outputFile = new StreamWriter(new FileStream(DictData.OutputFileLocation, FileMode.Create), SelectedEncoding))
             {
 
-                short NumberOfHeaderLeadingColumns = 8;
+                short NumberOfHeaderLeadingColumns = 9;
+
                 //write the header row to the output file
                 StringBuilder HeaderString = new StringBuilder();
                 HeaderString.Append(CSVQuote + "Filename" + CSVQuote + CSVDelimiter +
+                                     CSVQuote + "WC" + CSVQuote + CSVDelimiter +
                                      CSVQuote + "TC_Raw" + CSVQuote + CSVDelimiter +
                                      CSVQuote + "TTR_Raw" + CSVQuote + CSVDelimiter +
                                      CSVQuote + "TC_Clean" + CSVQuote + CSVDelimiter +
@@ -171,10 +173,20 @@ namespace VocabulateApplication
                                      CSVQuote + "TC_NonDict" + CSVQuote + CSVDelimiter +
                                      CSVQuote + "TTR_NonDict" + CSVQuote + CSVDelimiter +
                                      CSVQuote + "DictPercent" + CSVQuote);
+
+                
+                //output headers for the Concept-constrained Concept-Word Ratio (CWR)
+                for (int i = 0; i < DictData.NumCats; i++) HeaderString.Append(CSVDelimiter + CSVQuote + 
+                                                                               DictData.CatNames[i].Replace(CSVQuote, CSVQuote + CSVQuote) + "_CWR" +
+                                                                              CSVQuote);
+                    
+                    
+                //output headers for the Concept-Category Ratio (CCR)
                 for (int i = 0; i < DictData.NumCats; i++) HeaderString.Append(CSVDelimiter + CSVQuote + 
                                                                                DictData.CatNames[i].Replace(CSVQuote, CSVQuote + CSVQuote) + "_CCR" +
                                                                               CSVQuote);
 
+                //if they want the raw category counts, then we add those to the header as well
                 if(DictData.RawWordCounts)
                 {
                     for (int i = 0; i < DictData.NumCats; i++) HeaderString.Append(CSVDelimiter + CSVQuote +
@@ -227,6 +239,7 @@ namespace VocabulateApplication
 
                         int NumberOfMatches = 0;
 
+                        int WordCount_WhitespaceTokenizer = Tokenizer.TokenizeWhitespace(readText.Trim()).Length;
 
                         //splits everything out into words
                         string[] Words = Tokenizer.tokenize(readText.Trim());
@@ -365,19 +378,20 @@ namespace VocabulateApplication
 
                         
                         OutputString[0] = CSVQuote + Filename_Clean + CSVQuote; //filename
-                        OutputString[1] = TotalStringLength_BeforeStopList.ToString(); //total number of words
-                        if (TotalStringLength_BeforeStopList > 0) OutputString[2] = TTR_Raw.ToString(); //TTR_Raw
-                        OutputString[3] = TotalStringLength_AfterStopList.ToString(); //total number of tokens after stoplist processing
-                        if (TotalStringLength_AfterStopList > 0) OutputString[4] = TTR_Clean.ToString(); // TTR_Clean
-                        OutputString[5] = (TotalStringLength_AfterStopList - NumberOfMatches).ToString(); //number of non-dictionary tokens
-                        if (NonmatchedTokens.Count() > 0) OutputString[6] = (((double)NonmatchedTokens.Distinct().Count() / NonmatchedTokens.Count()) * 100).ToString(); //TTR for non-dictionary words
+                        OutputString[1] = WordCount_WhitespaceTokenizer.ToString(); //WordCount
+                        OutputString[2] = TotalStringLength_BeforeStopList.ToString(); //total number of words
+                        if (TotalStringLength_BeforeStopList > 0) OutputString[3] = TTR_Raw.ToString(); //TTR_Raw
+                        OutputString[4] = TotalStringLength_AfterStopList.ToString(); //total number of tokens after stoplist processing
+                        if (TotalStringLength_AfterStopList > 0) OutputString[5] = TTR_Clean.ToString(); // TTR_Clean
+                        OutputString[6] = (TotalStringLength_AfterStopList - NumberOfMatches).ToString(); //number of non-dictionary tokens
+                        if (NonmatchedTokens.Count() > 0) OutputString[7] = (((double)NonmatchedTokens.Distinct().Count() / NonmatchedTokens.Count()) * 100).ToString(); //TTR for non-dictionary words
                         
                     
                     //calculate and output the results
                     if (TotalStringLength_BeforeStopList > 0)
                         {
                             
-                            OutputString[7] = (((double)NumberOfMatches / TotalStringLength_BeforeStopList) * 100).ToString(); //dictpercent
+                            OutputString[8] = (((double)NumberOfMatches / TotalStringLength_BeforeStopList) * 100).ToString(); //dictpercent
 
 
                             //pull together the results here
@@ -402,12 +416,24 @@ namespace VocabulateApplication
                             }
 
 
-                            for(int i = 0; i < DictData.CategoryOrder.Count; i++)
+                            //this is where we actually calulate and output the CWR scores
+                            for (int i = 0; i < DictData.CategoryOrder.Count; i++)
+                            {
+
+                                if (WordCount_WhitespaceTokenizer > 0)
+                                {
+                                    OutputString[i + NumberOfHeaderLeadingColumns] = (((double)CompiledResults[DictData.CategoryOrder[i]][0] / WordCount_WhitespaceTokenizer) * 100.0).ToString();
+                                }
+
+                            }
+
+                            //this is where we actually calulate and output the CCR scores
+                            for (int i = 0; i < DictData.CategoryOrder.Count; i++)
                             {
 
                                 if (CompiledResults[DictData.CategoryOrder[i]][0] > 0)
                                 {
-                                    OutputString[i + NumberOfHeaderLeadingColumns] = (((double)CompiledResults[DictData.CategoryOrder[i]][0] / CompiledResults[DictData.CategoryOrder[i]][1]) * 100.0).ToString();
+                                    OutputString[i + NumberOfHeaderLeadingColumns + DictData.NumCats] = (((double)CompiledResults[DictData.CategoryOrder[i]][0] / CompiledResults[DictData.CategoryOrder[i]][1]) * 100.0).ToString();
                                 }
                                 
                             }
@@ -419,8 +445,8 @@ namespace VocabulateApplication
                                 for (int i = 0; i < DictData.CategoryOrder.Count; i++)
                                 {
 
-                                       OutputString[i + NumberOfHeaderLeadingColumns + DictData.NumCats] = CompiledResults[DictData.CategoryOrder[i]][1].ToString();
-                                       OutputString[i + NumberOfHeaderLeadingColumns + (DictData.NumCats * 2)] = CompiledResults[DictData.CategoryOrder[i]][0].ToString();
+                                       OutputString[i + NumberOfHeaderLeadingColumns + (DictData.NumCats * 2)] = CompiledResults[DictData.CategoryOrder[i]][1].ToString();
+                                       OutputString[i + NumberOfHeaderLeadingColumns + (DictData.NumCats * 3)] = CompiledResults[DictData.CategoryOrder[i]][0].ToString();
 
                                 }
 
@@ -432,7 +458,7 @@ namespace VocabulateApplication
                         }
                         else
                         {
-                            OutputString[2] = "";
+                            OutputString[3] = "";
                             for (int i = 0; i < DictData.NumCats; i++) OutputString[i + NumberOfHeaderLeadingColumns] = "";
                         }
 
@@ -580,8 +606,18 @@ namespace VocabulateApplication
 
         }
 
-
-
+        private void OutputInfoButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Output Information" + Environment.NewLine +
+                            "----------------------------" + Environment.NewLine +
+                            "WC:\tWord Count" + Environment.NewLine +
+                            "TC:\tToken Count" + Environment.NewLine +
+                            "TTR:\tType/Token Ratio" + Environment.NewLine +
+                            "CWR:\tConcept/Word Ratio" + Environment.NewLine +
+                            "CCR:\tConcept/Category Ratio" + Environment.NewLine,
+                            
+                            "Output Information", MessageBoxButtons.OK, MessageBoxIcon.Question);
+        }
     }
     
 

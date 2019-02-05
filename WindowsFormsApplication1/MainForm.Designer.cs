@@ -51,7 +51,10 @@
             this.DictionarySettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.OutputCapturedWordsCheckbox = new System.Windows.Forms.CheckBox();
+            this.ProcessingGroupbox = new System.Windows.Forms.GroupBox();
+            this.OutputInfoButton = new System.Windows.Forms.Button();
             this.DictionarySettingsGroupBox.SuspendLayout();
+            this.ProcessingGroupbox.SuspendLayout();
             this.SuspendLayout();
             // 
             // BgWorker
@@ -62,7 +65,8 @@
             // ScanSubfolderCheckbox
             // 
             this.ScanSubfolderCheckbox.AutoSize = true;
-            this.ScanSubfolderCheckbox.Location = new System.Drawing.Point(681, 294);
+            this.ScanSubfolderCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScanSubfolderCheckbox.Location = new System.Drawing.Point(22, 78);
             this.ScanSubfolderCheckbox.Name = "ScanSubfolderCheckbox";
             this.ScanSubfolderCheckbox.Size = new System.Drawing.Size(108, 17);
             this.ScanSubfolderCheckbox.TabIndex = 2;
@@ -72,9 +76,9 @@
             // StartButton
             // 
             this.StartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartButton.Location = new System.Drawing.Point(670, 256);
+            this.StartButton.Location = new System.Drawing.Point(22, 110);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(129, 32);
+            this.StartButton.Size = new System.Drawing.Size(114, 32);
             this.StartButton.TabIndex = 3;
             this.StartButton.Text = "Start";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -89,7 +93,7 @@
             // 
             this.FilenameLabel.AutoEllipsis = true;
             this.FilenameLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FilenameLabel.Location = new System.Drawing.Point(13, 378);
+            this.FilenameLabel.Location = new System.Drawing.Point(13, 428);
             this.FilenameLabel.Name = "FilenameLabel";
             this.FilenameLabel.Size = new System.Drawing.Size(859, 25);
             this.FilenameLabel.TabIndex = 6;
@@ -128,7 +132,7 @@
             this.RawWCCheckbox.Checked = true;
             this.RawWCCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.RawWCCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RawWCCheckbox.Location = new System.Drawing.Point(657, 318);
+            this.RawWCCheckbox.Location = new System.Drawing.Point(22, 32);
             this.RawWCCheckbox.Name = "RawWCCheckbox";
             this.RawWCCheckbox.Size = new System.Drawing.Size(164, 17);
             this.RawWCCheckbox.TabIndex = 21;
@@ -172,7 +176,7 @@
             this.StopListTextBox.Multiline = true;
             this.StopListTextBox.Name = "StopListTextBox";
             this.StopListTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.StopListTextBox.Size = new System.Drawing.Size(243, 330);
+            this.StopListTextBox.Size = new System.Drawing.Size(243, 381);
             this.StopListTextBox.TabIndex = 0;
             this.StopListTextBox.WordWrap = false;
             // 
@@ -228,7 +232,7 @@
             this.DictStructureTextBox.Name = "DictStructureTextBox";
             this.DictStructureTextBox.ReadOnly = true;
             this.DictStructureTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DictStructureTextBox.Size = new System.Drawing.Size(313, 330);
+            this.DictStructureTextBox.Size = new System.Drawing.Size(313, 381);
             this.DictStructureTextBox.TabIndex = 26;
             this.DictStructureTextBox.WordWrap = false;
             // 
@@ -274,42 +278,67 @@
             // 
             this.OutputCapturedWordsCheckbox.AutoSize = true;
             this.OutputCapturedWordsCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OutputCapturedWordsCheckbox.Location = new System.Drawing.Point(657, 341);
+            this.OutputCapturedWordsCheckbox.Location = new System.Drawing.Point(22, 55);
             this.OutputCapturedWordsCheckbox.Name = "OutputCapturedWordsCheckbox";
             this.OutputCapturedWordsCheckbox.Size = new System.Drawing.Size(169, 17);
             this.OutputCapturedWordsCheckbox.TabIndex = 29;
             this.OutputCapturedWordsCheckbox.Text = "Output Captured Text (Debug)";
             this.OutputCapturedWordsCheckbox.UseVisualStyleBackColor = true;
             // 
+            // ProcessingGroupbox
+            // 
+            this.ProcessingGroupbox.Controls.Add(this.OutputInfoButton);
+            this.ProcessingGroupbox.Controls.Add(this.OutputCapturedWordsCheckbox);
+            this.ProcessingGroupbox.Controls.Add(this.StartButton);
+            this.ProcessingGroupbox.Controls.Add(this.ScanSubfolderCheckbox);
+            this.ProcessingGroupbox.Controls.Add(this.RawWCCheckbox);
+            this.ProcessingGroupbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ProcessingGroupbox.Location = new System.Drawing.Point(602, 256);
+            this.ProcessingGroupbox.Name = "ProcessingGroupbox";
+            this.ProcessingGroupbox.Size = new System.Drawing.Size(264, 157);
+            this.ProcessingGroupbox.TabIndex = 30;
+            this.ProcessingGroupbox.TabStop = false;
+            this.ProcessingGroupbox.Text = "Processing Settings";
+            // 
+            // OutputInfoButton
+            // 
+            this.OutputInfoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OutputInfoButton.Location = new System.Drawing.Point(143, 110);
+            this.OutputInfoButton.Name = "OutputInfoButton";
+            this.OutputInfoButton.Size = new System.Drawing.Size(115, 32);
+            this.OutputInfoButton.TabIndex = 30;
+            this.OutputInfoButton.Text = "Output Info";
+            this.OutputInfoButton.UseVisualStyleBackColor = true;
+            this.OutputInfoButton.Click += new System.EventHandler(this.OutputInfoButton_Click);
+            // 
             // VocabulateMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
-            this.ClientSize = new System.Drawing.Size(884, 411);
-            this.Controls.Add(this.OutputCapturedWordsCheckbox);
+            this.ClientSize = new System.Drawing.Size(884, 461);
             this.Controls.Add(this.DictionarySettingsGroupBox);
             this.Controls.Add(this.DictionaryStructureLabel);
-            this.Controls.Add(this.RawWCCheckbox);
             this.Controls.Add(this.StopListTextBox);
             this.Controls.Add(this.StopListLabel);
             this.Controls.Add(this.FilenameLabel);
-            this.Controls.Add(this.StartButton);
-            this.Controls.Add(this.ScanSubfolderCheckbox);
             this.Controls.Add(this.DictStructureTextBox);
+            this.Controls.Add(this.ProcessingGroupbox);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(900, 450);
-            this.MinimumSize = new System.Drawing.Size(900, 450);
+            this.MaximumSize = new System.Drawing.Size(900, 500);
+            this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "VocabulateMainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vocabulate";
             this.DictionarySettingsGroupBox.ResumeLayout(false);
             this.DictionarySettingsGroupBox.PerformLayout();
+            this.ProcessingGroupbox.ResumeLayout(false);
+            this.ProcessingGroupbox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -338,6 +367,8 @@
         private System.Windows.Forms.GroupBox DictionarySettingsGroupBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox OutputCapturedWordsCheckbox;
+        private System.Windows.Forms.GroupBox ProcessingGroupbox;
+        private System.Windows.Forms.Button OutputInfoButton;
     }
 }
 
