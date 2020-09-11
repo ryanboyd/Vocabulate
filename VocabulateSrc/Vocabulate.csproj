@@ -121,12 +121,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="context.ico" />
     <None Include="Resources\StopListCharacters.txt" />
     <None Include="Resources\StopListEN.txt" />
     <None Include="Resources\1872_Expression_F1142_fig18.jpg" />
     <None Include="Resources\vocab.ico" />
-    <Content Include="Search.ico" />
     <None Include="Resources\AEV_Dict.csv" />
   </ItemGroup>
   <ItemGroup>
