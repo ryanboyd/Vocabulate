@@ -43,7 +43,7 @@ Note that this software is no longer in active development, although we plan to 
 * **[CategoryName]_CCR: Concept-Category Ratio**
   * This is the total number of concepts for the category divided by the total number of times the category was invoked in a given text. For example, the concepts "happy, joy, wonderful" gives the positive emotion CCR score 100% (3/3). The concepts "happy, happy, happy" result in a positive CCR score of 33% (1 unique concept divided by 3 invocations of the positive emotion category). Note that this score is vastly more sensitive to tiny perturbations than the CWR score.
 
-* [CategoryName]_Count
+* **[CategoryName]_Count**
   * Number of words belonging to the specified category found within the text.
 
 * **[CategoryName]_Unique**
