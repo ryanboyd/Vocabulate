@@ -12,7 +12,7 @@ Note that this software is no longer in active development, although we plan to 
 
 # Interpreting Vocabulate Output
 
-* WC: Word Count
+* **WC: Word Count**
   * Total number of words
 
 * TC_Raw: Token Count, Raw
