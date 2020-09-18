@@ -15,36 +15,36 @@ Note that this software is no longer in active development, although we plan to 
 * **WC: Word Count**
   * Total number of words
 
-* TC_Raw: Token Count, Raw
+* **TC_Raw: Token Count, Raw**
   * Total number of tokens. This is like word count, but separately includes things like punctuation, etc.
 
-* TTR_Raw: Type-Token Ratio, Raw
+* **TTR_Raw: Type-Token Ratio, Raw**
   * Type-Token ratio is just the number of unique tokens divided by the total number of tokens (a standard measure of vocabulary spread in linguistics). This is the TTR on the raw tokens
 
-* TC_Clean: Token Count, Clean
+* **TC_Clean: Token Count, Clean**
   * Token count after stop words are removed from text.
 
-* TTR_Clean: Type-Token Ratio, Clean
+* **TTR_Clean: Type-Token Ratio, Clean**
   * TTR, but calculated after stop words have been removed
 
-* TC_NonDict: Token Count, Non-Dictionary Words
+* **TC_NonDict: Token Count, Non-Dictionary Words**
   * Total number of tokens that were not captured by the loaded vocabulate dictionary
 
-* TTR_NonDict: Type-Token Ratio of Non-Dictionary Words
+* **TTR_NonDict: Type-Token Ratio of Non-Dictionary Words**
   * This is the TTR calculated on the vocabulary that is not captured by your dictionary. Can be thought of as a control variable: you may want to control for TTR in your statistical models but without cross-contamination from your dictionary words
 
-* DictPercent: Percentage of Dictionary Words
+* **DictPercent: Percentage of Dictionary Words**
   * Total percent of your text that was captured by the loaded dictionary
 
-* [CategoryName]_CWR: Concept-Word Ratio
+* **[CategoryName]_CWR: Concept-Word Ratio**
   * This the the number of unique concepts (e.g., happiness, joy, wonderment) from any given category (e.g., positive affect), divided by word count. This is the critical measure used in our publication. An example of how this measure would be calculated:
   ![banner](gitDocs/CWR_Example.png)
  
-* [CategoryName]_CCR: Concept-Category Ratio
+* **[CategoryName]_CCR: Concept-Category Ratio**
   * This is the total number of concepts for the category divided by the total number of times the category was invoked in a given text. For example, the concepts "happy, joy, wonderful" gives the positive emotion CCR score 100% (3/3). The concepts "happy, happy, happy" result in a positive CCR score of 33% (1 unique concept divided by 3 invocations of the positive emotion category). Note that this score is vastly more sensitive to tiny perturbations than the CWR score.
 
 * [CategoryName]_Count
   * Number of words belonging to the specified category found within the text.
 
-* [CategoryName]_Unique
+* **[CategoryName]_Unique**
   * Number of unique words belonging to the category found within the text. Dividing this score by Word Count then multiplying by 100 results in the CWR score. Diving this word by the "Count" variable from the same category results in the CCR score.
