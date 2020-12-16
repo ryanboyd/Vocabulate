@@ -8,7 +8,7 @@ Vine, V., Boyd, R. L., & Pennebaker, J. W. (2020). Natural emotion vocabularies 
 
 Note that the software can be compiled from the code on this page, or you can download and run the executable for the program from the [software's website](https://www.ryanboyd.io/software/vocabulate/) or directly from this [GitHub repository](https://github.com/ryanboyd/Vocabulate/releases/tag/v0.91). 
 
-Note that this software is no longer in active development, although we plan to make the software slightly more obvious in the near future (e.g., with an instructional YouTube video). The functionality of Vocabulate has been folded into some soon-to-be-released software: [BUTTER](https://www.butter.tools/).
+Note that this software is no longer in active development, although we plan to make the software slightly more obvious in the near future (e.g., with an instructional YouTube video). The functionality of Vocabulate has been folded into some more modern text analysis software named [BUTTER](https://www.butter.tools/) — you can get the same functionality from BUTTER using the "Concept-Category Diversity" plugin.
 
 # Interpreting Vocabulate Output
 
